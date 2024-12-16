@@ -12,7 +12,7 @@ def check_for_essid(essid, lst):
     check_status = True
 
 if not 'SUDO_UID' in os.environ.keys():
-    print("This Program needs Sudo!")
+    print("This Program needs Sudo to run properly!")
     exit()
 
 def cpu_temp():
@@ -54,6 +54,7 @@ while True:
 |      |_|  |     |_|  |___| |___| |__ """)
     print("--------------------------------------")
     print("---------PiProbe by thePortal---------")
+    print("---github.com/thePortal362/PiProbe----")
     print("--------------------------------------")
     print("")
     print("Select Mode:")
@@ -201,7 +202,7 @@ while True:
 
         if tool_select == "1":
             os.system('clear')
-            print("Starting Bettercap")
+            print("Starting Bettercap...")
             os.system('clear')
             try:
                 subprocess.run(['bettercap'], check=True)
@@ -212,7 +213,8 @@ while True:
 
         elif tool_select =="2":
             os.system('clear')
-            print("Starting ping service")
+            print("Starting ping service...")
+            time.sleep(0.5)
             os.system('clear')
             print("What Host do you want to ping?")
             ping_host = input()
