@@ -3,6 +3,7 @@ How to install this Script?
   Run this file
 
 Quick Fixes:
+
   -Make sure you have a linux distro installed, we recommend a debian based distro
   -Make sure you have python installed:
     Debian:
