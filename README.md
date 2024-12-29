@@ -1,6 +1,6 @@
 How to install this Script?
-  Create a new python file and paste the content of main.py
-  Run this file
+  Create a new python file and paste the content of main.py.
+  Run said file
 
 Quick Fixes:
 
