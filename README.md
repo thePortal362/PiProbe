@@ -1,12 +1,29 @@
-!!!This Script has Multiple Errors and is in Pre-Alpha Version!!!
+# PiProbe
+__!!!This Script has <ins>Multiple Errors</ins> and is in <ins>Pre-Alpha Version</ins>!!!__
 
-Also, I used some code from David Bombal, specifically from his WiFi Deauth Scripts. (https://github.com/davidbombal/red-python-scripts)
+> Also, I used some code from David Bombal, specifically from his WiFi Deauth Scripts. (https://github.com/davidbombal/red-python-scripts)
 
-How to install this Script?
-  Create a new python file and paste the content of main.py.
-  Run said file
+## Install:
+  __This guide is for debian only!__
+  
+  ### Install git:
 
-Quick Fixes:
+    sudo apt update
+    sudo apt install git
+
+  ### Clone this Repository:
+
+    git clone https://github.com/thePortal362/PiProbe
+
+  ### Change into cloned Repository:
+
+    cd PiProbe
+
+  ### Run the Script:
+
+    sudo python3 main.py
+
+## Quick Fixes:
 
   -Make sure you have a linux distribution installed, for all functions to work properly you need a debian based distribution.
  
