@@ -13,6 +13,8 @@ def check_for_essid(essid, lst):
 
 if not 'SUDO_UID' in os.environ.keys():
     print("This Program needs Sudo to run properly!")
+    print("If you don't have access to superuser rights try the rootless version:")
+    print("python3 rootless.py")
     exit()
 
 def cpu_temp():
