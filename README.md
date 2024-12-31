@@ -7,6 +7,8 @@ __!!The Rootless Version is not fully functional!!__
 > 
 > He also makes great python tutorials on YouTube. (https://www.youtube.com/watch?v=YKxKnVE5FaE&list=PLhfrWIlLOoKOc3z424rgsej5P5AP8yNKR)
 
+__For Problems, Questions, etc Mail me on theportalprogrammer@gmail.com__
+
 ## Install:
   __This guide is for debian only!__
   
@@ -48,3 +50,6 @@ __!!The Rootless Version is not fully functional!!__
   Fedora:
      
       sudo deb install python3
+
+  
+
