@@ -1,3 +1,7 @@
+This Script has Multiple Errors and is in Pre-Alpha Version!
+
+Also, I used some code from David Bombal, specifically from his WiFi Deauth Scripts. (https://github.com/davidbombal/red-python-scripts)
+
 How to install this Script?
   Create a new python file and paste the content of main.py.
   Run said file
