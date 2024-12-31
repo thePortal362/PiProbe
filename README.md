@@ -4,9 +4,18 @@ How to install this Script?
 
 Quick Fixes:
 
-  -Make sure you have a linux distro installed, we recommend a debian based distro
+  -Make sure you have a linux distribution installed, for all functions to work properly you need a debian based distribution.
+ 
   -Make sure you have python installed:
-    Debian:
-      sudo apt update, sudo apt install python
-    Arch:
-      sudo pacman -Syu python
+  
+  Debian:
+    
+      sudo apt update && sudo apt install python3
+    
+  Arch:
+    
+      sudo pacman -Syu python3
+    
+  Fedora:
+     
+      sudo deb install python3
