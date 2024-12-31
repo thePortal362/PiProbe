@@ -1,7 +1,11 @@
 # PiProbe
 __!!!This Script has <ins>Multiple Errors</ins> and is in <ins>Pre-Alpha Version</ins>!!!__
 
+__!!The Rootless Version is not fully functional!!__
+
 > Also, I used some code from David Bombal, specifically from his WiFi Deauth Scripts. (https://github.com/davidbombal/red-python-scripts)
+> 
+> He also makes great python tutorials on YouTube. (https://www.youtube.com/watch?v=YKxKnVE5FaE&list=PLhfrWIlLOoKOc3z424rgsej5P5AP8yNKR)
 
 ## Install:
   __This guide is for debian only!__
@@ -22,6 +26,10 @@ __!!!This Script has <ins>Multiple Errors</ins> and is in <ins>Pre-Alpha Version
   ### Run the Script:
 
     sudo python3 main.py
+
+  ### or the rootless Version:
+
+    python3 rootless.py
 
 ## Quick Fixes:
 
