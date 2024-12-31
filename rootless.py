@@ -278,7 +278,7 @@ while True:
 
         if other_select == "3":
             os.system('clear')
-            print("Just ask me")
+            print("E-Mail me on: theportalprogrammer@gmail.com")
             time.sleep(5)
             os.system('clear')
 
