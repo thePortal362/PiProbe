@@ -1,4 +1,4 @@
-This Script has Multiple Errors and is in Pre-Alpha Version!
+!!!This Script has Multiple Errors and is in Pre-Alpha Version!!!
 
 Also, I used some code from David Bombal, specifically from his WiFi Deauth Scripts. (https://github.com/davidbombal/red-python-scripts)
 
