@@ -62,7 +62,7 @@ while True:
     print("6. Exit")
     print("________________")
     print("No Root Version!")
-    print("________________")
+    print("----------------")
     mode_select = input()
     time.sleep(0.5)
 
