@@ -25,7 +25,7 @@ __For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
 
     cd PiProbe
 
-  ### Run the Script:
+  ### Run the Script with Sudo:
 
     sudo python3 main.py
 
