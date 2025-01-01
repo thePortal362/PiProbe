@@ -9,8 +9,7 @@ __!!The Rootless Version is not fully functional!!__
 
 __For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
 
-## Install:
-  __This guide is for debian only!__
+## Install (Debian):
   
   ### Install git:
 
@@ -32,6 +31,32 @@ __For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
   ### or the rootless Version:
 
     python3 rootless.py
+
+## Install (Arch):
+
+__Some Functions might not work on arch!__
+
+  ### Install git:
+
+    sudo pacman -Syu git
+
+  ### Clone this Repository:
+
+    git clone https://github.com/thePortal362/PiProbe
+
+  ### Change into cloned Repository:
+
+    cd PiProbe
+
+  ### Run this Script with Sudo:
+
+    sudo python3 main.py
+
+  ### or the rootless Version:
+
+    python3 rootless.py
+
+    
 
 ## Quick Fixes:
 
