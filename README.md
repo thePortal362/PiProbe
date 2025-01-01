@@ -35,21 +35,35 @@ __For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
 
 ## Quick Fixes:
 
-  -Make sure you have a linux distribution installed, for all functions to work properly you need a debian based distribution.
+  ### -Make sure you have a linux distribution installed, for all functions to work properly you need a _debian_ based distribution.
  
-  -Make sure you have python installed:
+  ### -Make sure you have python installed and on the newest version:
   
   Debian:
     
-      sudo apt update && sudo apt install python3
+      sudo apt install python3
     
   Arch:
     
-      sudo pacman -Syu python3
+      sudo pacman -S python3
     
   Fedora:
      
       sudo deb install python3
+
+  ### -Make sure you have Git installed:
+
+  Debian:
+
+    sudo apt install git
+
+  Arch:
+
+    sudo pacman -S git
+
+  Fedora:
+
+    sudo deb install git
 
   
 
