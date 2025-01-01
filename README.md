@@ -90,5 +90,7 @@ __Some Functions might not work on arch!__
 
     sudo deb install git
 
+  ### -Some Features need extra programms, those may need to be installed manually
+
   
 
