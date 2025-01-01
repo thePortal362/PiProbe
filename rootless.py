@@ -60,6 +60,9 @@ while True:
     print("4. Other")
     print("5. Calculate Prim Numbers")
     print("6. Exit")
+    print("________________")
+    print("No Root Version!")
+    print("________________")
     mode_select = input()
     time.sleep(0.5)
 
