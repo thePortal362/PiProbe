@@ -74,7 +74,7 @@ __Some Functions might not work on arch!__
     
   Fedora:
      
-      sudo deb install python3
+      sudo dnf install python3
 
   ### -Make sure you have Git installed:
 
@@ -88,7 +88,7 @@ __Some Functions might not work on arch!__
 
   Fedora:
 
-    sudo deb install git
+    sudo dnf install git
 
   ### -Some Features need extra programms, those may need to be installed manually
 
