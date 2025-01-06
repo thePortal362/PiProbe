@@ -8,6 +8,12 @@ from datetime import datetime
 
 active_wireless_networks = []
 
+wifi_interface_choice = "wlan0"
+
+def check_if_installed(program_name):
+    result = subprocess.run(['which', program_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return result.returncode == 0
+
 def check_for_essid(essid, lst):
     check_status = True
 
@@ -15,33 +21,42 @@ if not 'SUDO_UID' in os.environ.keys():
     print("This Program needs Sudo to run properly!")
     print("If you don't have access to superuser rights try the rootless version:")
     print("python3 rootless.py")
+    print("Note that some functions might not work properly")
     exit()
 
 def cpu_temp():
     try:
         output = subprocess.check_output(['sensors']).decode()
         for line in output.splitlines():
-            if "Core 0" in line:  # Find a line that mentions Core temperature
+            if "Core 0" in line:  
                 return line.strip()
     except Exception as e:
         return f"Error reading temperature: {e}"
 
-for file_name in os.listdir():
-    # We should only have one csv file as we delete them from the folder 
-    #  every time we run the program.
-    if ".csv" in file_name:
-        print("There shouldn't be any .csv files in your directory. We found .csv files in your directory and will move them to the backup directory.")
-        # We get the current working directory.
-        directory = os.getcwd()
-        try:
-            # We make a new directory called /backup
-            os.mkdir(directory + "/backup/")
-        except:
-            print("Backup folder exists.")
-        # Create a timestamp
-        timestamp = datetime.now()
-        # We move any .csv files in the folder to the backup folder.
-        shutil.move(file_name, directory + "/backup/" + str(timestamp) + "-" + file_name)
+def get_wifi_networks():
+    try:
+        wifi = subprocess.run(['sudo', 'iwlist', wifi_interface_choice, 'scan'], capture_output=True, text=True)
+        output = wifi.stdout
+
+        networks = re.findall(r'ESSID:"(.*?)"', output)
+        signal_strengths = re.findall(r'Signal level=(-?\d+)', output)
+
+        if not networks:
+            print("No WiFi Networks found")
+            return
+
+        print(f"{'SSID':<30}{'Signal Strength'}")
+        print("=" * 50)
+        for ssid, signal in zip(networks, signal_strengths):
+            print(f"{ssid:<30}{signal} dBm")
+
+    except Exception as e:
+        print(f"Error scanning for Neworks: {e}")
+
+def main():
+    print("Scanning for WiFi Networks")
+    print("==========================")
+    get_wifi_networks()
 
 while True:
 
@@ -84,38 +99,19 @@ while True:
         print("5. MDK3 Wifi Deauth")
         print("6. Go back")
         wifi_select = input()
+
         if wifi_select == "2":
             print("Scanning for WiFi Networks...")
             time.sleep(1)
             os.system('clear')
-            try:
-                while True:
-                    subprocess.call('clear', shell=True)
-                    for file_name in os.listdir():
-                        fieldnames = ['BSSID', 'First_time_seen', 'Last_time_seen', 'channel', 'Speed', 'Cipher', 'Authentication', 'Power', 'beacons', 'IV', 'LAN_IP', 'ID_length', 'ESSID', 'Key']
-                        if ".csv" in file_name:
-                            with open(file_name) as csv_h:
-                                csv_h.seek(0)
-                                csv_reader = csv.DictReader(csv_h, fieldnames=fieldnames)
-                                for row in csv_reader:
-                                    if row["BSSID"] == "BSSID":
-                                        pass
-                                    elif row["BSSID"] == "Station MAC":
-                                        break
-                                    elif check_for_essid(row["ESSID"], active_wireless_networks):
-                                        active_wireless_networks.append(row)
-                    print("Press Ctrl+C to stop scan\n")
-                    print("No |\tBSSID              |\tChannel|\tESSID                         |")
-                    print("___|\t___________________|\t_______|\t______________________________|")
-                    for index, item in enumerate(active_wireless_networks):
-                        print(f"{index}\t{item['BSSID']}\t{item['channel'].strip()}\t\t{item['ESSID']}")
-                    time.sleep(1)
-        
-            except KeyboardInterrupt:
-                print("\nReady to make choice")
-
-            
-            os.system('clear')
+            main()
+            print("")
+            print("Press \033[31me\033[0m to Exit")
+            exit_ans = input()
+            if exit_ans == "e":
+                os.system('clear')
+            else:
+                time.sleep(3600)
 
         elif wifi_select == "1":
             os.system('clear')
@@ -145,6 +141,44 @@ while True:
         elif wifi_select == "3":
             os.system('clear')
             print("Starting Fern WiFi Cracker")
+            os.system('clear')
+            if check_if_installed('fern-wifi-cracker'):
+                print("is_installed \033[32m[ok]\033[0m")
+                time.sleep(1.5)
+            else:
+                print("is_installed \033[31m[failed]\033[0m")
+                time.sleep(0.5)
+                print("Do you want to install it now? [1=Y/2=n]")
+                install_ans = input()
+                if install_ans == "1":
+                    print("Debian[1] or Arch[2]?")
+                    operating_sys = input()
+                    if operating_sys == "1":
+                        os.system('clear')
+                        time.sleep(1)
+                        print("Installing for Debian...")
+                        time.sleep(0.5)
+                        try:
+                            subprocess.run(['sudo', 'apt', 'install', 'fern-wifi-cracker'], check=True)
+                        except subprocess.CalledProcessError as e:
+                            print(f"Error: {e}")
+                            print("\033[32mfailed\033[0m to install")
+                    elif operating_sys == "2":
+                        os.system('clear')
+                        time.sleep(1)
+                        print("Installing for arch...")
+                        time.sleep(0.5)
+                        try:
+                            subprocess.run(['sudo', 'pacman', '-Syu', 'fern-wifi-cracker'])
+                        except subprocess.CalledProcessError as e:
+                            print(f"Error: {e}")
+                            print("\033[32mfailed\033[0m to install")
+                elif install_ans == "2":
+                    print("Not installing")
+                    time.sleep(1)
+
+                time.sleep(1)
+
             os.system('clear')
             time.sleep(0.5)
             try:
@@ -204,11 +238,30 @@ while True:
 
         if tool_select == "1":
             os.system('clear')
+            if check_if_installed('bettercap'):
+                print("is_installed \033[32m[ok]\033[0m")
+                time.sleep(1)
+            else:
+                print("is_installed \033[31m[failed]\033[0m")
+                time.sleep(0.5)
+                print("Do you want to install bettercap? Y=1/n=2")
+                install_ans = input()
+                if install_ans == "1":
+                    os.system('clear')
+                    print("Debian[1] or Arch[2]?")
+                    operating_sys = input()
+                    if operating_sys == "1":
+                        os.system('clear')
+                        subprocess.run(['sudo', 'apt', 'install', 'bettercap'])
+                    elif operating_sys == "2":
+                        os.system('clear')
+                        subprocess.run(['sudo', 'pacman', '-S', 'bettercap'])
             print("Starting Bettercap...")
             os.system('clear')
             try:
                 subprocess.run(['bettercap'], check=True)
             except subprocess.CalledProcessError as e:
+                time.sleep(3600)
                 print(f"Error: {e}")
             time.sleep(3.5)
             os.system('clear')
@@ -252,8 +305,8 @@ while True:
         
         if other_select == "1":
             os.system('clear')
-            print("Updating and upgrading")
-            time.sleep(0.5)
+            print("Making sure you have the latest")
+            time.sleep(1.5)
             os.system('clear')
             print("Please wait...")
             try:
@@ -314,6 +367,7 @@ while True:
             time.sleep(3)
             os.system('clear')
 
+
         if other_select == "7":
             time.sleep(0.2)
 
@@ -354,4 +408,5 @@ while True:
         time.sleep(5)    
     
     if mode_select == "6":
+        os.system('clear')
         break
