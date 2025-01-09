@@ -18,7 +18,7 @@ __For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
 
   ### Clone this Repository:
 
-    git clone https://github.com/thePortal362/PiProbe
+    git clone https://github.com/thePortal362/PiProbe.git
 
   ### Change into cloned Repository:
 
@@ -42,7 +42,7 @@ __Some Functions might not work on arch!__
 
   ### Clone this Repository:
 
-    git clone https://github.com/thePortal362/PiProbe
+    git clone https://github.com/thePortal362/PiProbe.git
 
   ### Change into cloned Repository:
 
