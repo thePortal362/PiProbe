@@ -1,5 +1,5 @@
 # PiProbe
-__!!!This Script has <ins>Multiple Errors</ins> and is in <ins>Pre-Alpha Version</ins>!!!__
+__!!!This Script is in <ins>Pre-Alpha Version</ins>!!!__
 
 __!!The Rootless Version is not fully functional and will not receive the latest Updates!!__
 
@@ -13,8 +13,7 @@ __For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
   
   ### Install git:
 
-    sudo apt update
-    sudo apt install git
+    sudo apt install git -y
 
   ### Clone this Repository:
 
