@@ -1,5 +1,4 @@
 # PiProbe
-__!!!This Script is in <ins>Pre-Alpha Version</ins>!!!__
 
 __!!The Rootless Version is not fully functional and will not receive the latest Updates!!__
 
