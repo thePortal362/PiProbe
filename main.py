@@ -195,9 +195,13 @@ while True:
             print("Starting Fern WiFi Cracker")
             os.system('clear')
             if check_if_installed('fern-wifi-cracker'):
+                print("Checking if installed...")
+                time.sleep(0.5)
                 print("is_installed \033[32m[ok]\033[0m")
                 time.sleep(1.5)
             else:
+                print("Checking if installed...")
+                time.sleep(0.5)
                 print("is_installed \033[31m[failed]\033[0m")
                 time.sleep(0.5)
                 print("Do you want to install it now? [1=Y/2=n]")
@@ -291,9 +295,13 @@ while True:
         if tool_select == "1":
             os.system('clear')
             if check_if_installed('bettercap'):
+                print("Checking if installed...")
+                time.sleep(0.5)
                 print("is_installed \033[32m[ok]\033[0m")
                 time.sleep(1)
             else:
+                print("Checking if installed...")
+                time.sleep(0.5)
                 print("is_installed \033[31m[failed]\033[0m")
                 time.sleep(0.5)
                 print("Do you want to install bettercap? Y=1/n=2")
