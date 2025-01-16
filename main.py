@@ -1,4 +1,7 @@
 import subprocess
+import http.server
+import socketserver
+import socket
 import re
 import csv
 import os
@@ -9,6 +12,55 @@ from datetime import datetime
 active_wireless_networks = []
 
 wifi_interface_choice = "wlan0"
+
+def start_server():
+    html_file = input("Enter the full path to the HTML file you want to serve: ").strip()
+    port_selection = input("What Port do you want to use? (default=8000): ").strip()
+    
+    
+    if not port_selection:
+        port_selection = 8000
+    else:
+        port_selection = int(port_selection)
+    
+    if not os.path.isfile(html_file):
+        print(f"Error: The file '{html_file}' does not exist.")
+        return
+    
+    directory = os.path.dirname(html_file)
+    file_name = os.path.basename(html_file)
+    
+   
+    os.chdir(directory)
+    
+    
+    class CustomHandler(http.server.SimpleHTTPRequestHandler):
+        def do_GET(self):
+            if self.path == "/" or self.path == f"/{file_name}":
+                self.path = f"/{file_name}"
+                return super().do_GET()
+            else:
+                self.send_error(404, "File Not Found")
+    
+    
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+    
+    
+    with socketserver.TCPServer(("", port_selection), CustomHandler) as httpd:
+        os.system('clear')
+        time.sleep(0.5)
+        print(f"Serving file '{file_name}' on:")
+        print(f"  Localhost: http://localhost:{port_selection}")
+        print(f"  Network: http://{local_ip}:{port_selection}")
+        print("")
+        print("Press Ctrl+C to stop the server.")
+        print("")
+        
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            print("\nServer stopped.")
 
 def check_if_installed(program_name):
     result = subprocess.run(['which', program_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -76,7 +128,7 @@ while True:
     print("")
     print("Select Mode:")
     print("1. WiFi")
-    print("2. BLE")
+    print("2. Start HTTP Server")
     print("3. Tools")
     print("4. Other")
     print("5. Calculate Prim Numbers")
@@ -126,12 +178,12 @@ while True:
                 exit()
 
             for index, item in enumerate(check_wifi_result):
-                print(f"{index} - {item}")
+                print(f"{item}")
 
             while True:
                 wifi_interface_choice = input("Select an interface: ")
                 try:
-                    if check_wifi_result[int(wifi_interface_choice)]:
+                    if check_wifi_result:
                         subprocess.run(['sudo', 'airmon-ng', 'start', wifi_interface_choice])
                         break
                 except:
@@ -224,9 +276,9 @@ while True:
 
     if mode_select == "2":
         os.system('clear')
-        print("Not avaible yet")
+        time.sleep(0.5)
+        start_server()
         time.sleep(2.5)
-        os.system('clear')
 
     if mode_select == "3":
         os.system('clear')
@@ -383,23 +435,23 @@ while True:
             if limit < 2:
                 return []
 
-            # Create a boolean array "is_prime[0..limit]" and initialize all entries as True.
+            
             is_prime = [True] * (limit + 1)
-            is_prime[0] = is_prime[1] = False  # 0 and 1 are not prime numbers.
+            is_prime[0] = is_prime[1] = False  
 
-            # Use the sieve algorithm.
+            
             for num in range(2, int(limit**0.5) + 1):
                 if is_prime[num]:
-                    # Mark all multiples of num as not prime.
+                    
                     for multiple in range(num * num, limit + 1, num):
                         is_prime[multiple] = False
 
-            # Collect all prime numbers.
+            
             primes = [num for num, prime in enumerate(is_prime) if prime]
             return primes
 
 
-        # Example usage:
+        
         if __name__ == "__main__":
             os.system('clear')
             upper_limit = int(input("Enter the upper limit to calculate prime numbers: "))
@@ -408,5 +460,6 @@ while True:
         time.sleep(5)    
     
     if mode_select == "6":
+        subprocess.run(['sudo', 'airmon-ng', 'stop', wifi_interface_choice + 'mon'])
         os.system('clear')
         break
