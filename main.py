@@ -54,7 +54,7 @@ def start_server():
         print(f"  Localhost: http://localhost:{port_selection}")
         print(f"  Network: http://{local_ip}:{port_selection}")
         print("")
-        print("Press Ctrl+C to stop the server.")
+        print("Press \033[31mCtrl+C\033[0m to stop the server.")
         print("")
         
         try:
@@ -107,14 +107,15 @@ def get_wifi_networks():
 
 def main():
     print("Scanning for WiFi Networks")
-    print("==========================")
+    print("--------------------------")
+    print()
     get_wifi_networks()
 
 while True:
 
     os.system('clear')
     print("--------------------------------------")
-    print("---------For Ethical Use only---------")
+    print("-----------For Debian/Arch------------")
     print("""--------------------------------------
  ___    _    ___                                                       
 |   |  |_|  |   |            |                                          
@@ -218,7 +219,7 @@ while True:
                             subprocess.run(['sudo', 'apt', 'install', 'fern-wifi-cracker'], check=True)
                         except subprocess.CalledProcessError as e:
                             print(f"Error: {e}")
-                            print("\033[32mfailed\033[0m to install")
+                            print("\033[31mfailed\033[0m to install")
                     elif operating_sys == "2":
                         os.system('clear')
                         time.sleep(1)
@@ -228,7 +229,7 @@ while True:
                             subprocess.run(['sudo', 'pacman', '-Syu', 'fern-wifi-cracker'])
                         except subprocess.CalledProcessError as e:
                             print(f"Error: {e}")
-                            print("\033[32mfailed\033[0m to install")
+                            print("\033[31mfailed\033[0m to install")
                 elif install_ans == "2":
                     print("Not installing")
                     time.sleep(1)
