@@ -111,6 +111,10 @@ def main():
     print()
     get_wifi_networks()
 
+os.system('clear')
+print("What Operating System do you use? Debian[1]/Arch[2]")
+operating_sys = input()
+
 while True:
 
     os.system('clear')
@@ -205,11 +209,9 @@ while True:
                 time.sleep(0.5)
                 print("is_installed \033[31m[failed]\033[0m")
                 time.sleep(0.5)
-                print("Do you want to install it now? [1=Y/2=n]")
+                print("Do you want to install it now? [Y/n]")
                 install_ans = input()
-                if install_ans == "1":
-                    print("Debian[1] or Arch[2]?")
-                    operating_sys = input()
+                if install_ans == "y":
                     if operating_sys == "1":
                         os.system('clear')
                         time.sleep(1)
@@ -230,7 +232,7 @@ while True:
                         except subprocess.CalledProcessError as e:
                             print(f"Error: {e}")
                             print("\033[31mfailed\033[0m to install")
-                elif install_ans == "2":
+                elif install_ans == "n":
                     print("Not installing")
                     time.sleep(1)
 
@@ -305,12 +307,10 @@ while True:
                 time.sleep(0.5)
                 print("is_installed \033[31m[failed]\033[0m")
                 time.sleep(0.5)
-                print("Do you want to install bettercap? Y=1/n=2")
+                print("Do you want to install bettercap? [Y/n]")
                 install_ans = input()
-                if install_ans == "1":
+                if install_ans == "y":
                     os.system('clear')
-                    print("Debian[1] or Arch[2]?")
-                    operating_sys = input()
                     if operating_sys == "1":
                         os.system('clear')
                         subprocess.run(['sudo', 'apt', 'install', 'bettercap'])
@@ -355,8 +355,8 @@ while True:
         time.sleep(0.5)
         os.system('clear')
         print("What do you want to do?")
-        print("1. Apt update & upgrade")
-        print("2. Install something with apt")
+        print("1. Update & upgrade")
+        print("2. Install something with pacman or apt")
         print("3. Help")
         print("4. Credits")
         print("5. Shutdown or Reboot")
@@ -370,13 +370,21 @@ while True:
             time.sleep(1.5)
             os.system('clear')
             print("Please wait...")
-            try:
-                subprocess.run(['apt', 'update'], check=True)
-                subprocess.run(['apt', 'upgrade', '-y'], check=True)
-                os.system('clear')
-                print("Success!")
-            except subprocess.CalledProcessError as e:
-                print(f"Error: {e}")
+            if operating_sys == "1":
+                try:
+                    subprocess.run(['apt', 'update'], check=True)
+                    subprocess.run(['apt', 'upgrade', '-y'], check=True)
+                    os.system('clear')
+                    print("Success!")
+                except subprocess.CalledProcessError as e:
+                    print(f"Error: {e}")
+            elif operating_sys == "2":
+                try:
+                    subprocess.run(['sudo', 'pacman', '-Syu'], check=True)
+                    os.system('clear')
+                    print("Success!")
+                except subprocess.CalledProcessError as e:
+                    print(f"Error: {e}")
             time.sleep(2.5)
             os.system('clear')
         
@@ -387,12 +395,20 @@ while True:
             os.system('clear')
             print("Installing " + install_pkg + "...")
             time.sleep(0.5)
-            try:
-                subprocess.run(['apt', 'install', install_pkg], check=True)
-                os.system('clear')
-                print("Success!")
-            except subprocess.CalledProcessError as e:
-                print(f"Error: {e}")
+            if operating_sys == "2":
+                try:
+                    subprocess.run(['sudo', 'pacman', '-S', install_pkg], check=True)
+                    os.system('clear')
+                    print("Success!")
+                except subprocess.CalledProcessError as e:
+                    print(f"Error: {e}")
+            elif operating_sys == "1":
+                try:
+                    subprocess.run(['sudo', 'apt', 'install', install_pkg], check=True)
+                    os.system('clear')
+                    print("Success!")
+                except subprocess.CalledProcessError as e:
+                    print(f"Error: {e}")
             time.sleep(2.5)
             os.system('clear')
 
