@@ -1,6 +1,6 @@
 # PiProbe
 > [!WARNING]
-> __The Rootless Version is not fully functional and will not receive the latest Updates!__
+> __The Rootless Version is not fully functional and will not receive the latest Updates! (Last Update: Jan 1)__
 
 > I used some code from David Bombal, specifically from his WiFi Deauth Scripts. (https://github.com/davidbombal/red-python-scripts)
 
