@@ -79,8 +79,6 @@ __Some functions might not work on Fedora!__
 ## Quick Fixes:
 
   ### -Make sure you have a fully working linux distribution installed, for all functions to work properly you need a _debian_ based distribution. I am still working on the compatibility with _arch_.
-
-  ### -Some tools need an Window Manager
  
   ### -Make sure you have python installed and on the newest version:
   
