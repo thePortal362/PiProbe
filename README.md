@@ -2,9 +2,7 @@
 > [!WARNING]
 > __The Rootless Version is not fully functional and will not receive the latest Updates!__
 
-> Also, I used some code from David Bombal, specifically from his WiFi Deauth Scripts. (https://github.com/davidbombal/red-python-scripts)
-> 
-> He also makes great python tutorials on YouTube. (https://www.youtube.com/watch?v=YKxKnVE5FaE&list=PLhfrWIlLOoKOc3z424rgsej5P5AP8yNKR)
+> I used some code from David Bombal, specifically from his WiFi Deauth Scripts. (https://github.com/davidbombal/red-python-scripts)
 
 __For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
 
