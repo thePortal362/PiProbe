@@ -80,7 +80,7 @@ __Some functions might not work on Fedora!__
   
 ## Quick Fixes:
 
-  ### -Make sure you have a fully working linux distribution installed, for all functions to work properly you need a _debian_ based distribution.
+  ### -Make sure you have a fully working linux distribution installed, for all functions to work properly you need a _debian_ based distribution. I am still working on the compatibility with _arch_.
 
   ### -Some tools need an Window Manager
  
@@ -97,20 +97,6 @@ __Some functions might not work on Fedora!__
   Fedora:
      
       sudo dnf install python3
-
-  ### -Make sure you have Git installed:
-
-  Debian:
-
-    sudo apt install git
-
-  Arch:
-
-    sudo pacman -S git
-
-  Fedora:
-
-    sudo dnf install git
 
   ### -Some Features need extra programms, those may need to be installed manually
 
