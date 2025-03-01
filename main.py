@@ -7,7 +7,10 @@ import csv
 import os
 import time
 import shutil
+from urllib.parse import urlparse
+import requests
 from datetime import datetime
+import json
 
 active_wireless_networks = []
 
@@ -112,8 +115,32 @@ def main():
     get_wifi_networks()
 
 os.system('clear')
-print("What Operating System do you use? Debian[1]/Arch[2]")
-operating_sys = input()
+
+data_file = "os.json"
+
+file_path = "os.json"
+
+def save_data(data):
+    with open(data_file, "w") as file:
+        json.dump(data, file)
+
+def load_data():
+    try:
+        with open(data_file, "r") as file:
+            return json.load(file)
+    except (IOError, FileNotFoundError):
+        return{}
+
+if not os.path.exists(file_path):
+    print("What Operating System do you use? Debian[1]/Arch[2]")
+    operating_sys = input()
+    data = operating_sys
+    save_data(data)
+else:
+    time.sleep(0.11)
+    operating_sys = load_data()
+
+
 
 while True:
 
@@ -137,7 +164,8 @@ while True:
     print("3. Tools")
     print("4. Other")
     print("5. Calculate Prim Numbers")
-    print("6. Exit")
+    print("6. Clear OS Choice")
+    print("7. Exit")
     mode_select = input()
     time.sleep(0.5)
 
@@ -291,7 +319,7 @@ while True:
         os.system('clear')
         print("All Tools:")
         print("1. Bettercap")
-        print("2. Ping Service")
+        print("2. Advanced Host Analysis")
         print("3. Go back")
         tool_select = input()
 
@@ -328,24 +356,101 @@ while True:
             os.system('clear')
 
         elif tool_select =="2":
-            os.system('clear')
-            print("Starting ping service...")
-            time.sleep(0.5)
-            os.system('clear')
-            print("What Host do you want to ping?")
-            ping_host = input()
-            os.system('clear')
-            time.sleep(0.5)
-            print("How many times?")
-            ping_cnt = input()
-            os.system('clear')
-            time.sleep(0.5)
-            try:
-                subprocess.run(['ping', ping_host, '-c', ping_cnt], check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"Error: {e}")
-            time.sleep(3.5)
-            os.system('clear')
+
+
+            def validate_domain(domain):
+                """Add protocol and www if needed, and validate the domain."""
+                if not domain.startswith("http://") and not domain.startswith("https://"):
+                    domain = "http://" + domain
+                try:
+                    parsed_url = urlparse(domain)
+                    domain_name = parsed_url.netloc or parsed_url.path
+                    return domain_name
+                except Exception as e:
+                    print(f"Invalid domain: {e}")
+                    return None
+
+            def get_ip_addresses(domain):
+                """Get IPv4 and IPv6 addresses of the domain."""
+                try:
+                    ipv4 = socket.gethostbyname(domain)
+                    ipv6 = socket.getaddrinfo(domain, None, socket.AF_INET6)
+                    ipv6 = ipv6[0][4][0] if ipv6 else None
+                    return ipv4, ipv6
+                except socket.gaierror as e:
+                    print(f"Could not resolve IP addresses: {e}")
+                    return None, None
+
+            def get_ports(domain):
+                """Scan for open ports using nmap (must be installed in Termux)."""
+                try:
+                    result = subprocess.check_output(["nmap", "-F", domain], stderr=subprocess.DEVNULL, text=True)
+                    ports = re.findall(r"(\d{1,5})/tcp\s+open", result)
+                    return ports
+                except FileNotFoundError:
+                    print("Nmap is not installed. Install it by running: pkg install nmap")
+                    return []
+                except Exception as e:
+                    print(f"Error scanning ports: {e}")
+                    return []
+
+            def get_paths(domain):
+                """Discover common paths (e.g., /home, /about)."""
+                common_paths = ["/", "/home", "/about", "/contact", "/login", "/admin"]
+                found_paths = []
+                for path in common_paths:
+                    try:
+                        url = f"http://{domain}{path}"
+                        response = requests.head(url, timeout=5)
+                        if response.status_code < 400:
+                            found_paths.append(path)
+                    except requests.RequestException:
+                        pass
+                return found_paths
+
+            def mainscript():
+                os.system('clear')
+                print("Website Information Script")
+                domain = input("Enter the domain: ").strip()
+                domain_name = validate_domain(domain)
+                if not domain_name:
+                    print("Invalid domain. Exiting.")
+                    return
+
+                print(f"\nFetching information for: {domain_name}")
+                time.sleep(0.5)
+                os.system('clear')
+                print("Information for " + domain_name + ":")
+                print("")
+                ipv4, ipv6 = get_ip_addresses(domain_name)
+                if ipv4:
+                    print(f"IPv4 Address: {ipv4}")
+                else:
+                    print("IPv4 Address: Not found")
+
+                if ipv6:
+                    print(f"IPv6 Address: {ipv6}")
+                else:
+                    print("IPv6 Address: Not found")
+
+                ports = get_ports(domain_name)
+                if ports:
+                    print(f"Open Ports: {', '.join(ports)}")
+                else:
+                    print("Open Ports: None found or nmap not installed")
+
+                paths = get_paths(domain_name)
+                if paths:
+                    print(f"Available Paths: {', '.join(paths)}")
+                else:
+                    print("Available Paths: None found")
+
+            if __name__ == "__main__":
+                mainscript()
+                time.sleep(1)
+
+            time.sleep(1)
+
 
         elif tool_select == "3":
             time.sleep(0.2)
@@ -483,8 +588,18 @@ while True:
             primes = calculate_primes(upper_limit)
             print(f"Prime numbers up to {upper_limit}: {primes}")
         time.sleep(5)    
-    
+
     if mode_select == "6":
+        try:
+            os.remove(file_path)
+            print("Successfully removed the OS Choice")
+            time.sleep(1)
+        except:
+            print("Failed to remove Save Data")
+            time.sleep(1)
+
+    
+    if mode_select == "7":
         subprocess.run(['sudo', 'airmon-ng', 'stop', wifi_interface_choice + 'mon'])
         os.system('clear')
         break
