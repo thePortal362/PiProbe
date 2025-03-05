@@ -319,7 +319,7 @@ while True:
         os.system('clear')
         print("All Tools:")
         print("1. Bettercap")
-        print("2. Advanced Host Analysis")
+        print("2. Advanced Web Analysis")
         print("3. Go back")
         tool_select = input()
 
@@ -410,7 +410,7 @@ while True:
 
             def mainscript():
                 os.system('clear')
-                print("Website Information Script")
+                print("Advanced Web Analysis")
                 domain = input("Enter the domain: ").strip()
                 domain_name = validate_domain(domain)
                 if not domain_name:
