@@ -2,8 +2,6 @@
 > [!WARNING]
 > __The Rootless Version is not fully functional and will not receive the latest Updates! (Last Update: Jan 1)__
 
-> I used some code from David Bombal, specifically from his WiFi Deauth Scripts. (https://github.com/davidbombal/red-python-scripts)
-
 __For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
 
 ## Install (Debian):
