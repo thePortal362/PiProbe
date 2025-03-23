@@ -1,6 +1,6 @@
 # PiProbe
 > [!WARNING]
-> __The Rootless Version is not fully functional and will not receive the latest Updates! (Last Update: Jan 1)__
+> __The Rootless Version is not fully functional and will not receive the latest Updates! (Last Update: Jan 1 2025)__
 
 __For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
 
