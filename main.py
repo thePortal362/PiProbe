@@ -102,7 +102,7 @@ def get_wifi_networks():
 
         print(f"{'SSID':<30}{'Signal Strength'}")
         print("=" * 50)
-        for ssid, signal in zip(networks, signal_strengths):
+        for ssid, signal, bssid in zip(networks, signal_strengths):
             print(f"{ssid:<30}{signal} dBm")
 
     except Exception as e:
@@ -469,7 +469,7 @@ while True:
         print("What do you want to do?")
         print("1. Update & upgrade")
         print("2. Install something with pacman or apt")
-        print("3. Help")
+        print("3. Custom Command")
         print("4. Credits")
         print("5. Shutdown or Reboot")
         print("6. Get CPU Temp")
@@ -526,8 +526,11 @@ while True:
 
         if other_select == "3":
             os.system('clear')
-            print("E-Mail me on: theportalprogrammer@gmail.com")
-            time.sleep(5)
+            print("What Command do you want to execute?")
+            custom_cmd = input()
+            time.sleep(0.25)
+            subprocess.run(custom_cmd, shell=True)
+            time.sleep(0.25)
             os.system('clear')
 
         if other_select == "4":
