@@ -472,8 +472,7 @@ while True:
         print("3. Custom Command")
         print("4. Credits")
         print("5. Shutdown or Reboot")
-        print("6. Get CPU Temp")
-        print("7. Go back")
+        print("6. Go back")
         other_select = input()
         
         if other_select == "1":
@@ -554,13 +553,6 @@ while True:
                 subprocess.run(['reboot'])    
 
         if other_select == "6":
-            os.system('clear')
-            print(cpu_temp)
-            time.sleep(3)
-            os.system('clear')
-
-
-        if other_select == "7":
             time.sleep(0.2)
 
     if mode_select == "5":
