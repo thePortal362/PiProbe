@@ -35,7 +35,7 @@ __Some Functions might not work on arch!__
 
   ### Install git:
 
-    sudo pacman -Syu git
+    sudo pacman -S git
 
   ### Clone this Repository:
 
