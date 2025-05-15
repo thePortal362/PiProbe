@@ -137,6 +137,15 @@ def load_data():
     except (IOError, FileNotFoundError):
         return{}
 
+def yes_no():
+    print("---------------")
+    print("Press e to exit")
+    print("---------------")
+    yes_no_ans = input()
+    if yes_no_ans == "e":
+        time.sleep(0.005)
+
+
 if not os.path.exists(file_path):
     print("What Operating System do you use? Debian[1]/Arch[2]")
     operating_sys = input()
@@ -230,7 +239,7 @@ while True:
         elif wifi_select == "3":
             os.system('clear')
             quick_wifite_atk()
-            time.sleep(1)
+            yes_no()
             os.system('clear')
 
         elif wifi_select == "4":
@@ -284,6 +293,9 @@ while True:
                 subprocess.run(["sudo", "wifite", "--daemon", "--kill"])
             except subprocess.CalledProcessError as e:
                 print(f"Error: {e}")
+            yes_no()
+            time.sleep(0.025)
+            os.system('clear')
 
     if mode_select == "2":
         os.system('clear')
