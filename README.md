@@ -5,7 +5,7 @@
 > [!WARNING]
 > __The Rootless Version is not fully functional and will not receive the latest Updates. (Last Update: Jan 1 2025)__
 
-__For Problems, Questions, etc Mail me on: theportalprogrammer@gmail.com__
+__For Problems, Questions, etc: mail me on: theportalprogrammer@gmail.com__
 
 ## Install (Debian):
   
@@ -78,8 +78,10 @@ __Some functions might not work on Fedora!__
     python3 rootless.py
 
 ## Setup for quick wifite attack:
-  ### You need to put an wordlist named wrdlist.txt into the PiProbe Folder.
-  ### The normal attack will use the default wordlist included with wifite.
+  ____
+  __You need to put an wordlist named wrdlist.txt into the PiProbe Folder.__
+  __The normal attack will use the default wordlist included with wifite.__
+  ____
   
 ## Quick Fixes:
 
