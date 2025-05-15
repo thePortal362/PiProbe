@@ -88,6 +88,12 @@ def cpu_temp():
     except Exception as e:
         return f"Error reading temperature: {e}"
 
+def quick_wifite_atk():
+    try:
+        subprocess.run(['sudo', 'wifite', '--daemon', '--no-wps', '--no-pmkid', '--dict', 'wrdlist.txt'])
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
+
 def get_wifi_networks():
     try:
         wifi = subprocess.run(['sudo', 'iwlist', wifi_interface_choice, 'scan'], capture_output=True, text=True)
@@ -162,10 +168,9 @@ while True:
     print("1. WiFi")
     print("2. Start HTTP Server")
     print("3. Tools")
-    print("4. Other")
-    print("5. Calculate Prim Numbers")
-    print("6. Clear OS Choice")
-    print("7. Exit")
+    print("4. CMD")
+    print("5. Clear OS Choice")
+    print("6. Exit")
     mode_select = input()
     time.sleep(0.5)
 
@@ -179,7 +184,7 @@ while True:
         time.sleep(0.5)
         print("1. Scan for interfaces and enable Monitored Mode")
         print("2. Scan for WiFi networks")
-        print("3. Fern WiFi Cracker")
+        print("3. Quick Wifite Attack (Use 3.2 for normal attack)")
         print("4. Connect to WiFi")
         print("5. MDK3 AP Deauth")
         print("6. Go back")
@@ -195,8 +200,7 @@ while True:
             exit_ans = input()
             if exit_ans == "e":
                 os.system('clear')
-            else:
-                time.sleep(3600)
+                time.sleep(1)
 
         elif wifi_select == "1":
             os.system('clear')
@@ -225,53 +229,9 @@ while True:
         
         elif wifi_select == "3":
             os.system('clear')
-            print("Starting Fern WiFi Cracker")
+            quick_wifite_atk()
+            time.sleep(1)
             os.system('clear')
-            if check_if_installed('fern-wifi-cracker'):
-                print("Checking if installed...")
-                time.sleep(0.5)
-                print("is_installed \033[32m[ok]\033[0m")
-                time.sleep(1.5)
-            else:
-                print("Checking if installed...")
-                time.sleep(0.5)
-                print("is_installed \033[31m[failed]\033[0m")
-                time.sleep(0.5)
-                print("Do you want to install it now? [Y/n]")
-                install_ans = input()
-                if install_ans == "y":
-                    if operating_sys == "1":
-                        os.system('clear')
-                        time.sleep(1)
-                        print("Installing for Debian...")
-                        time.sleep(0.5)
-                        try:
-                            subprocess.run(['sudo', 'apt', 'install', 'fern-wifi-cracker'], check=True)
-                        except subprocess.CalledProcessError as e:
-                            print(f"Error: {e}")
-                            print("\033[31mfailed\033[0m to install")
-                    elif operating_sys == "2":
-                        os.system('clear')
-                        time.sleep(1)
-                        print("Installing for arch...")
-                        time.sleep(0.5)
-                        try:
-                            subprocess.run(['sudo', 'pacman', '-Syu', 'fern-wifi-cracker'])
-                        except subprocess.CalledProcessError as e:
-                            print(f"Error: {e}")
-                            print("\033[31mfailed\033[0m to install")
-                elif install_ans == "n":
-                    print("Not installing")
-                    time.sleep(1)
-
-                time.sleep(1)
-
-            os.system('clear')
-            time.sleep(0.5)
-            try:
-                subprocess.run(['sudo', 'fern-wifi-cracker'], check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"Error: {e}")
 
         elif wifi_select == "4":
             print("Connection Mode")
@@ -315,6 +275,15 @@ while True:
 
         elif wifi_select == "6":
             time.sleep(0.2)
+
+        elif wifi_select == "3.2":
+            time.sleep(0.5)
+            os.system('clear')
+            time.sleep(0.2)
+            try:
+                subprocess.run(["sudo", "wifite", "--daemon", "--kill"])
+            except subprocess.CalledProcessError as e:
+                print(f"Error: {e}")
 
     if mode_select == "2":
         os.system('clear')
@@ -463,7 +432,7 @@ while True:
             time.sleep(0.2)
 
     if mode_select == "4":
-        print("Other selected")
+        print("Cmd selected")
         time.sleep(0.5)
         os.system('clear')
         print("What do you want to do?")
@@ -535,7 +504,6 @@ while True:
         if other_select == "4":
             os.system('clear')
             print("Script by thePortal")
-            print("Thanks to David Bombal for some Code Snippets")
             time.sleep(5)
             os.system('clear')
 
@@ -556,42 +524,6 @@ while True:
             time.sleep(0.2)
 
     if mode_select == "5":
-        os.system('clear')
-        def calculate_primes(limit):
-            """
-            Calculate all prime numbers up to a given limit using the Sieve of Eratosthenes.
-    
-            :param limit: int - The upper limit of numbers to check for primality.
-            :return: list - A list of prime numbers up to the specified limit.
-            """
-            if limit < 2:
-                return []
-
-            
-            is_prime = [True] * (limit + 1)
-            is_prime[0] = is_prime[1] = False  
-
-            
-            for num in range(2, int(limit**0.5) + 1):
-                if is_prime[num]:
-                    
-                    for multiple in range(num * num, limit + 1, num):
-                        is_prime[multiple] = False
-
-            
-            primes = [num for num, prime in enumerate(is_prime) if prime]
-            return primes
-
-
-        
-        if __name__ == "__main__":
-            os.system('clear')
-            upper_limit = int(input("Enter the upper limit to calculate prime numbers: "))
-            primes = calculate_primes(upper_limit)
-            print(f"Prime numbers up to {upper_limit}: {primes}")
-        time.sleep(5)    
-
-    if mode_select == "6":
         try:
             os.remove(file_path)
             print("Successfully removed the OS Choice")
@@ -601,19 +533,19 @@ while True:
             time.sleep(1)
 
     
-    if mode_select == "7":
+    if mode_select == "6":
         subprocess.run(['sudo', 'airmon-ng', 'stop', wifi_interface_choice + 'mon'])
         os.system('clear')
         break
 
     if mode_select == "shutdown":
         os.system('clear')
-        print("Shutdown in 3 seconds")
+        print("\033[31mShutdown in 3 seconds\033[0m")
         time.sleep(1)
         os.system('clear')
-        print("Shutdown in 2 seconds")
+        print("\033[31mShutdown in 2 seconds\033[0m")
         time.sleep(1)
         os.system('clear')
-        print("Shutdown in 1 second")
+        print("\033[31mShutdown in 1 second\033[0m")
         time.sleep(1)
         subprocess.run(['shutdown', '-h', 'now'])
