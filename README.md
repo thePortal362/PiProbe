@@ -76,6 +76,10 @@ __Some functions might not work on Fedora!__
   ### or the rootless Version:
 
     python3 rootless.py
+
+## Setup for quick wifite attack:
+  ### You need to put an wordlist named wrdlist.txt into the PiProbe Folder.
+  ### The normal attack will use the default wordlist included with wifite.
   
 ## Quick Fixes:
 
