@@ -1,4 +1,6 @@
 # PiProbe
+![PiProbe Example Image](logo.png)
+
 > [!WARNING]
 > __Do not use any of the features this script provides if you don't know what you're doing, as this can pose risk to your and other devices. I do not condone any illegal activity!__
 
