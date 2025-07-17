@@ -16,27 +16,47 @@ active_wireless_networks = []
 
 wifi_interface_choice = "wlan0"
 
+def disable_monitored_mode():
+    try:
+        subprocess.run(['sudo', 'airmon-ng', 'stop', wifi_interface_choice + "mon"])
+    except KeyboardInterrupt:
+        print("\nInterrupted by Input!")
+        time.sleep(0.5)
+
+def search_network_devices():
+    try:
+        subprocess.run(['sudo', 'arp-scan', '--localnet'])
+        print("")
+        print("Press \033[31me\033[0m to exit")
+        if input() == "e":
+            time.sleep(0.25)
+            os.system('clear')
+    except KeyboardInterrupt:
+        print("\n Scan stopped.")
+        time.sleep(0.5)
+
+
 def start_server():
     html_file = input("Enter the full path to the HTML file you want to serve: ").strip()
     port_selection = input("What Port do you want to use? (default=8000): ").strip()
-    
-    
+
+
     if not port_selection:
         port_selection = 8000
     else:
         port_selection = int(port_selection)
-    
+
     if not os.path.isfile(html_file):
-        print(f"Error: The file '{html_file}' does not exist.")
+        print(f"\033[31mError: The file '{html_file}' does not exist.\033[0m")
         return
-    
+
     directory = os.path.dirname(html_file)
     file_name = os.path.basename(html_file)
-    
-   
+
+
     os.chdir(directory)
-    
-    
+
+
     class CustomHandler(http.server.SimpleHTTPRequestHandler):
         def do_GET(self):
             if self.path == "/" or self.path == f"/{file_name}":
@@ -44,12 +64,12 @@ def start_server():
                 return super().do_GET()
             else:
                 self.send_error(404, "File Not Found")
-    
-    
+
+
     hostname = socket.gethostname()
     local_ip = socket.gethostbyname(hostname)
-    
-    
+
+
     with socketserver.TCPServer(("", port_selection), CustomHandler) as httpd:
         os.system('clear')
         time.sleep(0.5)
@@ -59,7 +79,7 @@ def start_server():
         print("")
         print("Press \033[31mCtrl+C\033[0m to stop the server.")
         print("")
-        
+
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
@@ -83,7 +103,7 @@ def cpu_temp():
     try:
         output = subprocess.check_output(['sensors']).decode()
         for line in output.splitlines():
-            if "Core 0" in line:  
+            if "Core 0" in line:
                 return line.strip()
     except Exception as e:
         return f"Error reading temperature: {e}"
@@ -96,21 +116,7 @@ def quick_wifite_atk():
 
 def get_wifi_networks():
     try:
-        wifi = subprocess.run(['sudo', 'iwlist', wifi_interface_choice, 'scan'], capture_output=True, text=True)
-        output = wifi.stdout
-
-        networks = re.findall(r'ESSID:"(.*?)"', output)
-        signal_strengths = re.findall(r'Signal level=(-?\d+)', output)
-
-        if not networks:
-            print("No WiFi Networks found")
-            return
-
-        print(f"{'SSID':<30}{'Signal Strength'}")
-        print("=" * 50)
-        for ssid, signal, bssid in zip(networks, signal_strengths):
-            print(f"{ssid:<30}{signal} dBm")
-
+        subprocess.run(['sudo', 'wash', '-i', wifi_interface_choice + 'mon'])
     except Exception as e:
         print(f"Error scanning for Neworks: {e}")
 
@@ -138,9 +144,9 @@ def load_data():
         return{}
 
 def yes_no():
-    print("---------------")
-    print("Press e to exit")
-    print("---------------")
+    print("_________________")
+    print(" Press \033[31me\033[0m to exit ")
+    print("_________________")
     yes_no_ans = input()
     if yes_no_ans == "e":
         time.sleep(0.005)
@@ -161,47 +167,52 @@ while True:
 
     os.system('clear')
     print("--------------------------------------")
-    print("-----------For Debian/Arch------------")
+    print("-----------\033[35mFor Debian/Arch\033[0m------------")
     print("""--------------------------------------
- ___    _    ___                                                       
-|   |  |_|  |   |            |                                          
-|___|   _   |___|  ___  ___  |___   __
-|      | |  |     | |/ |   | |   | |__|
-|      |_|  |     |_|  |___| |___| |__ """)
+ \033[34m______ _ ______           _             
+(_____ (_|_____ \         | |            
+ _____) ) _____) )___ ___ | | _   ____   
+|  ____/ |  ____/ ___) _ \| || \ / _  )  
+| |    | | |   | |  | |_| | |_) | (/ /   
+|_|    |_|_|   |_|   \___/|____/ \____)\033[0m  
+""")
     print("--------------------------------------")
-    print("---------PiProbe by thePortal---------")
-    print("---github.com/thePortal362/PiProbe----")
+    print("---------\033[35mPiProbe by thePortal\033[0m---------")
+    print("---\033[35mgithub.com/thePortal362/PiProbe\033[0m----")
     print("--------------------------------------")
     print("")
-    print("Select Mode:")
-    print("1. WiFi")
-    print("2. Start HTTP Server")
-    print("3. Tools")
-    print("4. CMD")
-    print("5. Clear OS Choice")
-    print("6. Exit")
+    print("             \033[34mSelect Mode:\033[0m")
+    print("")
+    print("               \033[35m1.\033[0m WiFi")
+    print("         \033[35m2.\033[0m Start HTTP Server")
+    print("               \033[35m3.\033[0m Tools")
+    print("                \033[35m4.\033[0m CMD")
+    print("          \033[35m5.\033[0m Clear OS Choice")
+    print(" \033[35m6.\033[0m Exit (6.1: Disable Monitored Mode)")
     mode_select = input()
     time.sleep(0.5)
 
 
     if mode_select == "1" :
         print("WiFi mode selected")
-        time.sleep(0.5)
+        time.sleep(0.2)
         os.system('clear')
-        time.sleep(0.5)
-        print("What do you want to do?")
-        time.sleep(0.5)
+        time.sleep(0.25)
+        print("\033[34mWhat do you want to do?\033[0m")
+        time.sleep(0.25)
         print("1. Scan for interfaces and enable Monitored Mode")
         print("2. Scan for WiFi networks")
         print("3. Quick Wifite Attack (Use 3.2 for normal attack)")
-        print("4. Connect to WiFi")
+        print("4. Search for Localnetwork Devices")
         print("5. MDK3 AP Deauth")
         print("6. Go back")
         wifi_select = input()
 
         if wifi_select == "2":
             print("Scanning for WiFi Networks...")
-            time.sleep(1)
+            print("")
+            print("!Monitored Mode must be enabled first!")
+            time.sleep(1.5)
             os.system('clear')
             main()
             print("")
@@ -227,15 +238,16 @@ while True:
                 print(f"{item}")
 
             while True:
-                wifi_interface_choice = input("Select an interface: ")
+                wifi_interface_choice = input("\033[35mSelect an interface:\033[0m ")
                 try:
                     if check_wifi_result:
                         subprocess.run(['sudo', 'airmon-ng', 'start', wifi_interface_choice])
                         break
                 except:
-                    print("Please select a real interface.") 
-            os.system('clear')                  
-        
+                    print("Please select a \033[31mreal\033[0m interface.")
+                    time.sleep(2)
+            os.system('clear')
+
         elif wifi_select == "3":
             os.system('clear')
             quick_wifite_atk()
@@ -243,24 +255,10 @@ while True:
             os.system('clear')
 
         elif wifi_select == "4":
-            print("Connection Mode")
+            print("Scan Mode")
             time.sleep(0.5)
             os.system('clear')
-            print("SSID:")
-            connect_ssid = input()
-            time.sleep(0.5)
-            print("Password: (If none type nothing)")
-            connect_pwd = input()
-            os.system('clear')
-            print("Trying to connect...")
-            try:
-                subprocess.run(['nmcli', 'dev', 'wifi', 'connect', connect_ssid, 'password', connect_pwd, '--ask'], check=True)
-                os.system('clear')
-                print("Connected!")
-            except subprocess.CalledProcessError as e:
-                print(f"Error: {e}")
-            time.sleep(5.5)
-            os.system('clear')
+            search_network_devices()
 
         elif wifi_select == "5":
             print("AP Deauth")
@@ -299,13 +297,14 @@ while True:
 
     if mode_select == "2":
         os.system('clear')
-        time.sleep(0.5)
+        time.sleep(0.2)
         start_server()
         time.sleep(2.5)
 
     if mode_select == "3":
         os.system('clear')
-        print("All Tools:")
+        time.sleep(0.1)
+        print("\033[34mAll Tools:\033[0m")
         print("1. Bettercap")
         print("2. Advanced Web Analysis")
         print("3. Go back")
@@ -445,9 +444,9 @@ while True:
 
     if mode_select == "4":
         print("Cmd selected")
-        time.sleep(0.5)
+        time.sleep(0.25)
         os.system('clear')
-        print("What do you want to do?")
+        print("\033[34mWhat do you want to do?\033[0m")
         print("1. Update & upgrade")
         print("2. Install something with pacman or apt")
         print("3. Custom Command")
@@ -455,7 +454,7 @@ while True:
         print("5. Shutdown or Reboot")
         print("6. Go back")
         other_select = input()
-        
+
         if other_select == "1":
             os.system('clear')
             print("Making sure you have the latest")
@@ -479,7 +478,7 @@ while True:
                     print(f"Error: {e}")
             time.sleep(2.5)
             os.system('clear')
-        
+
         if other_select == "2":
             os.system('clear')
             print("What do you want to install?")
@@ -530,7 +529,7 @@ while True:
                 subprocess.run(['shutdown', '-h', 'now'])
 
             if sutd_select == "2":
-                subprocess.run(['reboot'])    
+                subprocess.run(['reboot'])
 
         if other_select == "6":
             time.sleep(0.2)
@@ -544,7 +543,7 @@ while True:
             print("Failed to remove Save Data")
             time.sleep(1)
 
-    
+
     if mode_select == "6":
         subprocess.run(['sudo', 'airmon-ng', 'stop', wifi_interface_choice + 'mon'])
         os.system('clear')
@@ -561,3 +560,21 @@ while True:
         print("\033[31mShutdown in 1 second\033[0m")
         time.sleep(1)
         subprocess.run(['shutdown', '-h', 'now'])
+
+    if mode_select == "reboot":
+        os.system('clear')
+        print("\033[31mRebooting in 3 seconds\033[0m")
+        time.sleep(1)
+        os.system('clear')
+        print("\033[31mRebooting in 2 seconds\033[0m")
+        time.sleep(1)
+        os.system('clear')
+        print("\033[31mRebooting in 1 second\033[0m")
+        time.sleep(1)
+        subprocess.run(['reboot'])
+
+    if mode_select == "6.1":
+        time.sleep(0.5)
+        os.system('clear')
+        disable_monitored_mode()
+        os.system('clear')
