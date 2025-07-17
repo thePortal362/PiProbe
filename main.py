@@ -28,7 +28,7 @@ def search_network_devices():
         subprocess.run(['sudo', 'arp-scan', '--localnet'])
         print("")
         print("Press \033[31me\033[0m to exit")
-        if input() == "e":
+        if input(">") == "e":
             time.sleep(0.25)
             os.system('clear')
     except KeyboardInterrupt:
@@ -147,14 +147,14 @@ def yes_no():
     print("_________________")
     print(" Press \033[31me\033[0m to exit ")
     print("_________________")
-    yes_no_ans = input()
+    yes_no_ans = input(">")
     if yes_no_ans == "e":
         time.sleep(0.005)
 
 
 if not os.path.exists(file_path):
     print("What Operating System do you use? Debian[1]/Arch[2]")
-    operating_sys = input()
+    operating_sys = input(">")
     data = operating_sys
     save_data(data)
 else:
@@ -189,11 +189,12 @@ while True:
     print("                \033[35m4.\033[0m CMD")
     print("          \033[35m5.\033[0m Clear OS Choice")
     print(" \033[35m6.\033[0m Exit (6.1: Disable Monitored Mode)")
-    mode_select = input()
+    print("")
+    mode_select = input(">")
     time.sleep(0.5)
 
 
-    if mode_select == "1" :
+    if mode_select == "1" or mode_select == "wifi":
         print("WiFi mode selected")
         time.sleep(0.2)
         os.system('clear')
@@ -206,23 +207,23 @@ while True:
         print("4. Search for Localnetwork Devices")
         print("5. MDK3 AP Deauth")
         print("6. Go back")
-        wifi_select = input()
+        wifi_select = input(">")
 
-        if wifi_select == "2":
+        if wifi_select == "2" or wifi_select == "scan for networks":
             print("Scanning for WiFi Networks...")
             print("")
-            print("!Monitored Mode must be enabled first!")
+            print("\033[31m!Monitored Mode must be enabled first!\033[0m")
             time.sleep(1.5)
             os.system('clear')
             main()
             print("")
             print("Press \033[31me\033[0m to Exit")
-            exit_ans = input()
+            exit_ans = input(">")
             if exit_ans == "e":
                 os.system('clear')
                 time.sleep(1)
 
-        elif wifi_select == "1":
+        elif wifi_select == "1" or wifi_select == "scan for interfaces":
             os.system('clear')
             time.sleep(0.5)
 
@@ -248,24 +249,24 @@ while True:
                     time.sleep(2)
             os.system('clear')
 
-        elif wifi_select == "3":
+        elif wifi_select == "3" or wifi_select =="wifite quick":
             os.system('clear')
             quick_wifite_atk()
             yes_no()
             os.system('clear')
 
-        elif wifi_select == "4":
+        elif wifi_select == "4" or wifi_select =="scan for localnet":
             print("Scan Mode")
             time.sleep(0.5)
             os.system('clear')
             search_network_devices()
 
-        elif wifi_select == "5":
+        elif wifi_select == "5" or wifi_select == "ap deauth":
             print("AP Deauth")
             time.sleep(0.5)
             os.system("clear")
-            print("What AP do you want to attack? ")
-            attack_ip = input()
+            print("\033[34mWhat AP do you want to attack?\033[0m")
+            attack_ip = input(">")
             time.sleep(0.5)
             os.system('clear')
             if "beserk" in attack_ip:
@@ -280,10 +281,10 @@ while True:
                     print(f"Error: {e}")
             time.sleep(5)
 
-        elif wifi_select == "6":
+        elif wifi_select == "6" or wifi_select == "back":
             time.sleep(0.2)
 
-        elif wifi_select == "3.2":
+        elif wifi_select == "3.2" or wifi_select == "wifite":
             time.sleep(0.5)
             os.system('clear')
             time.sleep(0.2)
@@ -295,22 +296,22 @@ while True:
             time.sleep(0.025)
             os.system('clear')
 
-    if mode_select == "2":
+    if mode_select == "2" or mode_select == "start http":
         os.system('clear')
         time.sleep(0.2)
         start_server()
         time.sleep(2.5)
 
-    if mode_select == "3":
+    if mode_select == "3" or mode_select == "tools":
         os.system('clear')
         time.sleep(0.1)
         print("\033[34mAll Tools:\033[0m")
         print("1. Bettercap")
         print("2. Advanced Web Analysis")
         print("3. Go back")
-        tool_select = input()
+        tool_select = input(">")
 
-        if tool_select == "1":
+        if tool_select == "1" or tool_select == "bettercap":
             os.system('clear')
             if check_if_installed('bettercap'):
                 print("Checking if installed...")
@@ -323,7 +324,7 @@ while True:
                 print("is_installed \033[31m[failed]\033[0m")
                 time.sleep(0.5)
                 print("Do you want to install bettercap? [Y/n]")
-                install_ans = input()
+                install_ans = input(">")
                 if install_ans == "y":
                     os.system('clear')
                     if operating_sys == "1":
@@ -342,7 +343,7 @@ while True:
             time.sleep(3.5)
             os.system('clear')
 
-        elif tool_select =="2":
+        elif tool_select =="2" or tool_select == "awa":
 
 
             def validate_domain(domain):
@@ -439,10 +440,10 @@ while True:
             time.sleep(1)
 
 
-        elif tool_select == "3":
+        elif tool_select == "3" or tool_select == "back":
             time.sleep(0.2)
 
-    if mode_select == "4":
+    if mode_select == "4" or mode_select == "cmd":
         print("Cmd selected")
         time.sleep(0.25)
         os.system('clear')
@@ -453,9 +454,9 @@ while True:
         print("4. Credits")
         print("5. Shutdown or Reboot")
         print("6. Go back")
-        other_select = input()
+        other_select = input(">")
 
-        if other_select == "1":
+        if other_select == "1" or other_select == "update":
             os.system('clear')
             print("Making sure you have the latest")
             time.sleep(1.5)
@@ -479,10 +480,10 @@ while True:
             time.sleep(2.5)
             os.system('clear')
 
-        if other_select == "2":
+        if other_select == "2" or other_select == "install":
             os.system('clear')
-            print("What do you want to install?")
-            install_pkg = input()
+            print("\033[34mWhat do you want to install?\033[0m")
+            install_pkg = input(">")
             os.system('clear')
             print("Installing " + install_pkg + "...")
             time.sleep(0.5)
@@ -503,27 +504,29 @@ while True:
             time.sleep(2.5)
             os.system('clear')
 
-        if other_select == "3":
+        if other_select == "3" or other_select == "custom cmd":
             os.system('clear')
-            print("What Command do you want to execute?")
-            custom_cmd = input()
+            print("\033[34mWhat Command do you want to execute?\033[0m")
+            custom_cmd = input(">")
             time.sleep(0.25)
             subprocess.run(custom_cmd, shell=True)
             time.sleep(0.25)
             os.system('clear')
 
-        if other_select == "4":
+        if other_select == "4" or other_select == "credits":
             os.system('clear')
-            print("Script by thePortal")
-            time.sleep(5)
-            os.system('clear')
+            print("\033[35mScript by\033[0m \033[34mthePortal\033[0m")
+            print("")
+            print("Press \033[31me\033[0m to exit")
+            if input(">") == "e":
+                os.system('clear')
 
-        if other_select == "5":
+        if other_select == "5" or other_select == "shutdown":
             os.system('clear')
             print("What do you want to do?")
             print("1. Shutdown")
             print("2. Reboot")
-            sutd_select = input()
+            sutd_select = input(">")
 
             if sutd_select == "1":
                 subprocess.run(['shutdown', '-h', 'now'])
@@ -531,10 +534,10 @@ while True:
             if sutd_select == "2":
                 subprocess.run(['reboot'])
 
-        if other_select == "6":
+        if other_select == "6" or other_select == "back":
             time.sleep(0.2)
 
-    if mode_select == "5":
+    if mode_select == "5" or mode_select == "clear os":
         try:
             os.remove(file_path)
             print("Successfully removed the OS Choice")
@@ -544,7 +547,7 @@ while True:
             time.sleep(1)
 
 
-    if mode_select == "6":
+    if mode_select == "6" or mode_select == "exit" or mode_select == "quit":
         subprocess.run(['sudo', 'airmon-ng', 'stop', wifi_interface_choice + 'mon'])
         os.system('clear')
         break
@@ -573,7 +576,7 @@ while True:
         time.sleep(1)
         subprocess.run(['reboot'])
 
-    if mode_select == "6.1":
+    if mode_select == "6.1" or mode_select == "disable":
         time.sleep(0.5)
         os.system('clear')
         disable_monitored_mode()
