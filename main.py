@@ -11,20 +11,120 @@ from urllib.parse import urlparse
 import requests
 from datetime import datetime
 import json
+speed = 0.2
 
 active_wireless_networks = []
-
+wordlist_path = "wrdlist.txt"
 wifi_interface_choice = "wlan0"
+
+def intro():
+    print("\033[35m")
+    os.system('clear')
+    print(r"""
+
+       
+  _  _ 
+ | || |
+  \_, |
+  |__/ 
+
+""")
+    time.sleep(speed)   
+    os.system('clear')
+    print(r"""
+
+            
+  _  _ __ _ 
+ | || / _` |
+  \_, \__,_|
+  |__/      
+
+""")
+    time.sleep(speed)
+    os.system('clear')
+    print(r"""
+
+                   
+  _  _ __ ___ __ __
+ | || / _` \ V  V /
+  \_, \__,_|\_/\_/ 
+  |__/             
+
+""")
+    time.sleep(speed)
+    os.system('clear')
+    print(r"""
+
+                        
+  _  _ __ ___ __ ___ _  
+ | || / _` \ V  V / ' \ 
+  \_, \__,_|\_/\_/|_||_|
+  |__/                  
+
+""")
+    time.sleep(speed)
+    os.system('clear')
+    print(r"""
+
+                            
+  _  _ __ ___ __ ___ _  ___ 
+ | || / _` \ V  V / ' \/ -_)
+  \_, \__,_|\_/\_/|_||_\___|
+  |__/                      
+
+""")
+    time.sleep(speed)
+    os.system('clear')
+    print(r"""
+
+                            _   
+  _  _ __ ___ __ ___ _  ___| |_ 
+ | || / _` \ V  V / ' \/ -_)  _|
+  \_, \__,_|\_/\_/|_||_\___|\__|
+  |__/                          
+
+""")
+    time.sleep(speed)
+    os.system('clear')
+    print(r"""
+
+                            _       
+  _  _ __ ___ __ ___ _  ___| |___ __
+ | || / _` \ V  V / ' \/ -_)  _\ \ /
+  \_, \__,_|\_/\_/|_||_\___|\__/_\_\
+  |__/                              
+
+""")
+    print("\033[0m")
+    time.sleep(1)
+
+def nmap_scan():
+    os.system('clear')
+    print("\033[36mWhat is the IP I should scan? (ends with .0/24)\033[0m")
+    scan_ip = input(">")
+    os.system('clear')
+    print("\033[31mThis Scan may take 1-15+ minutes!\033[0m")
+    print("")
+    try:
+        subprocess.run(['sudo', 'nmap', '-sn' , scan_ip])
+        print("Press \033[31me\033[0m to exit")
+        if input(">") == "e":
+            time.sleep(0.5)
+            os.system('clear')
+    except KeyboardInterrupt:
+        print("\n\033[31mScan stopped\033[0m")
 
 def disable_monitored_mode():
     try:
         subprocess.run(['sudo', 'airmon-ng', 'stop', wifi_interface_choice + "mon"])
     except KeyboardInterrupt:
-        print("\nInterrupted by Input!")
+        print("\n\033[31mInterrupted by Input!\033[0m")
         time.sleep(0.5)
 
 def search_network_devices():
     try:
+        print("\033[36mScanning for Devices\033[0m")
+        print("")
         subprocess.run(['sudo', 'arp-scan', '--localnet'])
         print("")
         print("Press \033[31me\033[0m to exit")
@@ -109,8 +209,14 @@ def cpu_temp():
         return f"Error reading temperature: {e}"
 
 def quick_wifite_atk():
+    os.system('clear')
+    global wordlist_path
+    print("\033[36mType in the Wordlist Name (default: wrdlist.txt)\033[0m")
+    new_wordlist_path = input(">")
+    if new_wordlist_path:
+        wordlist_path = new_wordlist_path
     try:
-        subprocess.run(['sudo', 'wifite', '--daemon', '--no-wps', '--no-pmkid', '--dict', 'wrdlist.txt'])
+        subprocess.run(['sudo', 'wifite', '--daemon', '--no-wps', '--no-pmkid', '--dict', wordlist_path])
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
 
@@ -121,8 +227,8 @@ def get_wifi_networks():
         print(f"Error scanning for Neworks: {e}")
 
 def main():
-    print("Scanning for WiFi Networks")
-    print("--------------------------")
+    print("\033[36mScanning for WiFi Networks\033[0m")
+    print("\033[36m--------------------------\033[0m")
     print()
     get_wifi_networks()
 
@@ -153,7 +259,7 @@ def yes_no():
 
 
 if not os.path.exists(file_path):
-    print("What Operating System do you use? Debian[1]/Arch[2]")
+    print("\033[33mWhat Operating System do you use? \033[35mDebian[1]\033[0m/\033[34mArch[2]\033[0m")
     operating_sys = input(">")
     data = operating_sys
     save_data(data)
@@ -162,14 +268,14 @@ else:
     operating_sys = load_data()
 
 
-
+intro()
 while True:
 
     os.system('clear')
     print("--------------------------------------")
-    print("-----------\033[35mFor Debian/Arch\033[0m------------")
+    print("-----------\033[36mFor \033[35mDebian\033[0m/\033[34mArch\033[0m------------")
     print("""--------------------------------------
- \033[34m______ _ ______           _             
+ \033[36m______ _ ______           _             
 (_____ (_|_____ \         | |            
  _____) ) _____) )___ ___ | | _   ____   
 |  ____/ |  ____/ ___) _ \| || \ / _  )  
@@ -177,14 +283,14 @@ while True:
 |_|    |_|_|   |_|   \___/|____/ \____)\033[0m  
 """)
     print("--------------------------------------")
-    print("---------\033[35mPiProbe by thePortal\033[0m---------")
-    print("---\033[35mgithub.com/thePortal362/PiProbe\033[0m----")
+    print("----------\033[36mPiProbe by \033[31my\033[32ma\033[33mw\033[34mn\033[35me\033[36mt\033[33mx\033[0m----------")
+    print("---\033[31mgithub\033[32m.com\033[33m/thePortal362\033[34m/PiProbe\033[0m----")
     print("--------------------------------------")
     print("")
-    print("             \033[34mSelect Mode:\033[0m")
+    print("             \033[36mSelect Mode:\033[0m")
     print("")
     print("               \033[35m1.\033[0m WiFi")
-    print("         \033[35m2.\033[0m Start HTTP Server")
+    print("         \033[35m2.\033[0m Start HTTP Server (NOT SECURE!)")
     print("               \033[35m3.\033[0m Tools")
     print("                \033[35m4.\033[0m CMD")
     print("          \033[35m5.\033[0m Clear OS Choice")
@@ -199,12 +305,12 @@ while True:
         time.sleep(0.2)
         os.system('clear')
         time.sleep(0.25)
-        print("\033[34mWhat do you want to do?\033[0m")
+        print("\033[36mWhat do you want to do?\033[0m")
         time.sleep(0.25)
         print("1. Scan for interfaces and enable Monitored Mode")
         print("2. Scan for WiFi networks")
         print("3. Quick Wifite Attack (Use 3.2 for normal attack)")
-        print("4. Search for Localnetwork Devices")
+        print("4. Search for Localnetwork Devices (4.1 nmap scan)")
         print("5. MDK3 AP Deauth")
         print("6. Go back")
         wifi_select = input(">")
@@ -261,11 +367,17 @@ while True:
             os.system('clear')
             search_network_devices()
 
+        elif wifi_select == "4.1" or wifi_select == "nmap scan":
+            print("Scan Mode")
+            time.sleep(0.5)
+            os.system('clear')
+            nmap_scan()
+
         elif wifi_select == "5" or wifi_select == "ap deauth":
             print("AP Deauth")
             time.sleep(0.5)
             os.system("clear")
-            print("\033[34mWhat AP do you want to attack?\033[0m")
+            print("\033[36mWhat AP do you want to attack?\033[0m")
             attack_ip = input(">")
             time.sleep(0.5)
             os.system('clear')
@@ -287,9 +399,15 @@ while True:
         elif wifi_select == "3.2" or wifi_select == "wifite":
             time.sleep(0.5)
             os.system('clear')
+            wordlist_path_2 = "wrdlist.txt"
+            print("Input the Wordlist Name (default: wrdlist.txt)")
+            new_wordlist_path = input(">")
+            if new_wordlist_path:
+                wordlist_path_2 = new_wordlist_path
+            os.system('clear') 
             time.sleep(0.2)
             try:
-                subprocess.run(["sudo", "wifite", "--daemon", "--kill"])
+                subprocess.run(["sudo", "wifite", "--daemon", "--kill", "--dict", wordlist_path_2])
             except subprocess.CalledProcessError as e:
                 print(f"Error: {e}")
             yes_no()
@@ -305,7 +423,7 @@ while True:
     if mode_select == "3" or mode_select == "tools":
         os.system('clear')
         time.sleep(0.1)
-        print("\033[34mAll Tools:\033[0m")
+        print("\033[36mAll Tools:\033[0m")
         print("1. Bettercap")
         print("2. Advanced Web Analysis")
         print("3. Go back")
@@ -447,7 +565,7 @@ while True:
         print("Cmd selected")
         time.sleep(0.25)
         os.system('clear')
-        print("\033[34mWhat do you want to do?\033[0m")
+        print("\033[36mWhat do you want to do?\033[0m")
         print("1. Update & upgrade")
         print("2. Install something with pacman or apt")
         print("3. Custom Command")
@@ -469,20 +587,26 @@ while True:
                     os.system('clear')
                     print("Success!")
                 except subprocess.CalledProcessError as e:
-                    print(f"Error: {e}")
+                    print("")
+                    print("\033[31mError:\033[0m")
+                    print(f"\033[31mError: {e}\033[0m")
+                    time.sleep(2)
             elif operating_sys == "2":
                 try:
                     subprocess.run(['sudo', 'pacman', '-Syu'], check=True)
                     os.system('clear')
                     print("Success!")
                 except subprocess.CalledProcessError as e:
-                    print(f"Error: {e}")
+                    print("")
+                    print("\033[31mError:\033[0m")
+                    print(f"\033[31mError: {e}\033[0m")
+                    time.sleep(2)
             time.sleep(2.5)
             os.system('clear')
 
         if other_select == "2" or other_select == "install":
             os.system('clear')
-            print("\033[34mWhat do you want to install?\033[0m")
+            print("\033[36mWhat do you want to install?\033[0m")
             install_pkg = input(">")
             os.system('clear')
             print("Installing " + install_pkg + "...")
@@ -506,7 +630,7 @@ while True:
 
         if other_select == "3" or other_select == "custom cmd":
             os.system('clear')
-            print("\033[34mWhat Command do you want to execute?\033[0m")
+            print("\033[36mWhat Command do you want to execute?\033[0m")
             custom_cmd = input(">")
             time.sleep(0.25)
             subprocess.run(custom_cmd, shell=True)
@@ -515,7 +639,7 @@ while True:
 
         if other_select == "4" or other_select == "credits":
             os.system('clear')
-            print("\033[35mScript by\033[0m \033[34mthePortal\033[0m")
+            print("\033[35mScript by\033[0m \033[36myawnetx\033[0m")
             print("")
             print("Press \033[31me\033[0m to exit")
             if input(">") == "e":
